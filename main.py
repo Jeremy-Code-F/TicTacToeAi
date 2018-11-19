@@ -1,44 +1,30 @@
 from random import randint
 import ComputerAi
+from BoardOperations import BoardOperation
 
 gameBoard = ["none", "none", "none", "none", "none", "none", "none", "none", "none"]
 
-def DrawBoardToConsole():
-    print('\n')
-    print('\n')
-    
-    x = 0
-    for thing in gameBoard:
-        if(x % 3 == 0):
-            print()
-        print(thing, end="\t")
-        x = x + 1
+
 
 def GameLoop():
     victoryReached = False
-    firstMoveIsUser = False
-    userMove = False
-    computerMove = False
     moveCounter = 1
+    newBoard = BoardOperation(gameBoard)
 
-    coinFlip = randint(0, 1)
 
-    if(coinFlip == 1):
-        firstMoveIsUser = True
-        userMove = True
-        computerMove = False
-    else:
-        firstMoveIsUser = False
-        computerMove = True
-    
+    newBoard.DetermineFirstMove()
+
     while(not victoryReached):
+        print("Draw board")
 
-        DrawBoardToConsole()
+        newBoard.DrawBoardToConsole()
+
+        #Make play game until victory
 
         if(moveCounter == 10):
             return
 
-        if(computerMove):
+        if(newBoard.computerMove):
             print("This is the computers turn:")
             ComputerAi.MakeMoveTest(gameBoard, moveCounter)
             computerMove = False
